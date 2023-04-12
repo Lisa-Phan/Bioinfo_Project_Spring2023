@@ -75,8 +75,6 @@ image_motif = r'Meme_motif_binder_protein.png'
 ########################################
 
 def intro():
-
-    st.text(str(prob.columns))
     #Titles
     st.title('Caldendrin binding partners analysis')
     st.header('Swetha Iyer, Lisa Phan')
