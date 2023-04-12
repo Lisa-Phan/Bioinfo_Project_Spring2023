@@ -1,1 +1,2 @@
-plotly-express
+python==3.10.10
+plotly
