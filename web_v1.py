@@ -63,16 +63,16 @@ prob['Binder_Protein_name'] = prob['InterPro'].map(binder_dict, na_action = 'ign
 
 
 
-################ Links ################
-#######################################
+################ Assets Links ################
+#############################################
 link = r'https://github.com/Lisa-Phan/Bioinfo_Project_Spring2023/blob/master/movie2.mp4?raw=true'
 image_venn = r'venn.png'
 image_scheme = r'schematic.png'
 image_motif = r'Meme_motif_binder_protein.png'
 
 
-########### End of links ###############
-########################################
+################# End of links ###############
+#############################################
 
 def intro():
     #Titles
@@ -131,7 +131,18 @@ def intro():
     
     st.image(image_venn, use_column_width=True)
 
-########### Plot1 ###########
+    citation = st.container()
+    citation.write("**1.** Mundhenk, J., Fusi, C., & Kreutz, M. R. (2019). \
+                   Caldendrin and calneurons—EF-hand CaM-like calcium \
+                   sensors with unique features and specialized neuronal \
+                   functions. Frontiers in Molecular Neuroscience, 12, 16.")
+    citation.write("**2.** Kaizuka, T., & Takumi, T. (2018). Postsynaptic density  \
+                   proteins and their involvement in neurodevelopmental disorders. \
+                   Journal of biochemistry, 163(6), 447–455. https://doi.org/10.1093/jb/mvy022")
+    citation.write("**3.** Tippens, A. L., & Lee, A. (2007). Caldendrin, a neuron-specific modulator of Cav/1.2\
+                    (L-type) Ca2+ channels. The Journal of biological chemistry, 282(11), 8464–8473. \
+                   https://doi.org/10.1074/jbc.M611384200")
+    
 def plot_interpro(data = data, psd = psd, prob = prob, ID_count = ID_count):
     st.title('InterPro domains of EF-hand 1 and 2 binders')
     n_slider = st.slider('Select the minimum value of n:', min_value=0, max_value=int(data['n'].max()), value=15)
@@ -153,6 +164,22 @@ def plot_interpro(data = data, psd = psd, prob = prob, ID_count = ID_count):
 
     st.plotly_chart(fig, theme='streamlit', use_container_width=True)
 
+    binder_a_cont = st.container()
+    binder_a_cont.write("Using BioGrid protein interaction database, we identified the interactors \
+                        (binder B) of all EF1 and EF2 hand proteins (binder A) and identified all the \
+                        potential motifs in their individual sequences. As a first step of this protein-protein \
+                        interaction analysis, we were interested to see what is the general proportion of \
+                        motif distribution among the EF1 and Ef2 hand Caldendrin-like proteins (binder A). \
+                        The barplot represents the InterPro descriptions of all the identified motifs  from binder \
+                        A sequences, plotted against the number of proteins consisting them. The data suggests that \
+                        SRC3 domain, a well known protein interaction module, is present in around 45 binder A \
+                        proteins making it the top motif observed in this dataset. Following SRC3, the PH like \
+                        domain and PDZ domain are also present in similar proportions. The Pleckstrin homology (PH) \
+                        like domains and PDZ domains are usually present in cytoskeleton to support the cellular architecture \
+                        and also PH like domain is involved in intracellular signalling.")
+    
+
+
 
 ########### Plot2 ###########
 #Biomart query
@@ -172,7 +199,14 @@ def plot_interpro(data = data, psd = psd, prob = prob, ID_count = ID_count):
     fig2.update_xaxes(tickangle=45, title_text='Interpro Description', title_font={"size": 20}, title_standoff=25)
     fig2.update_layout(width=1200,height=800)
     st.plotly_chart(fig2, theme='streamlit', use_container_width=True)
-
+    PSD_domain_cont = st.container()
+    PSD_domain_cont.write("We used the PSD protein dataset to look \
+                          at the distribution of each motif identified by InterPro. \
+                          Like Figure 1, Figure 2 is a barplot of number of proteins \
+                          consisting of each motif against the InterPro ID of each motif. \
+                          The data suggests that PH-like domain and SRC3 domains are present \
+                          in most of the PSD proteins which includes the EF1 and EF2 hand \
+                          proteins (binder A proteins)")
     ########### Plot3 ###########
     #correlation plot
 
@@ -208,7 +242,7 @@ def plot_interpro(data = data, psd = psd, prob = prob, ID_count = ID_count):
         ID_count_fil,
         x='Domains',
         y='Count',
-        title='InterPro Domains of Post-synaptic density proteins',
+        title='Pfam Domains of Post-synaptic density proteins',
         hover_data=['Domains'],
         color="Count"
     )
@@ -236,6 +270,7 @@ def disordered():
                     We argue that this side of Caldendrin likely does not interacting with binding partners, since the MSA suggested fairly low \
                     sequence conservation compared to EF-hand motif. Nonetheless, the constant presence of this disordered stretch in Caldendrin-like proteins \
                     could still play other important functions not yet investigated.')
+
 def MSA():
     st.header('Multiple Sequence Alignment')
     st.subheader('BLAST-ing against NCBI experimentally clustered data')
@@ -247,7 +282,8 @@ def MSA():
                    then perform multiple sequence alignment using MUSCLE. \
                    Displayed beneath is a Dash-bio.AlignmentChart representation of the top few hundred hits, with sequence coverage ranging from 100% to 37% \
                    and E-values ranging from 6e-125 to 0.037")
-    msa_desc.write('To get an overview of the alignment and modify the display range, scroll down to the bottom of the page adjust the slider')
+    msa_desc.write('To get an overview of the alignment and modify the display range, scroll down to the bottom of the page adjust the slider. \
+                   For a full-screen view, visit http://elpea.pythonanywhere.com')
 
     #https://blast.ncbi.nlm.nih.gov/Blast.cgi
     components.html('<iframe width="700" height="550" src="http://elpea.pythonanywhere.com/"></iframe>', height=800, width=800) 
@@ -299,8 +335,7 @@ def known_interactors(interactor_df=interactor_df):
     
     plot_note = st.container()
     note = st.container()
-    plot_note.write("The dash line is for x = y")
-    plot_note.write("The red colored scatter do not group in any particular cluster")
+    plot_note.write("The dash line is for x = y. The red colored scatter do not group in any particular cluster")
     
     note.write('The scatter plot shown above is a bit incomplete in describing the data density, \
                which is very strongly skewed towards smaller X and Y values.\
@@ -319,7 +354,57 @@ def known_interactors(interactor_df=interactor_df):
         
     #minor note
 
+def discussion():
+    st.header('Discussion')
+    st.subheader('Initial thoughts')
+    thoughts_cont = st.container()
+    thoughts_cont.write("Our first attempt at this project is to create a set of **binder A** via structural search to identify\
+                        proteins that are similar to Caldendrin. This approach is not viable since most human Caldendrin-like \
+                        structures and sequences that we were able to find are just Caldendrin across different species, with very limited annotations on what \
+                        their binding partners are. Thus, we decided to switch to motif querying. \
+                        Since nature works in modules and motifs, we reason that looking at motifs which frequently interacts \
+                        with EF-hands - Caldendrin's main structurally definitive component - can give us clues on \
+                        potential interactors might be.")
+    
+    st.subheader('P(EF-hand binders) vs P(PSD protein)')
+    thoughts_cont_2 = st.container()
+    thoughts_cont_2.write(" We are treating *P(PSD-protein)*, the frequency at which given InterPro domain is found \
+                          among PSD proteins, as a proxy for the commonality of the domain in general. \
+                          *P(EF-hand binders)*, the frequency of the InterPro domain among EF-hand binders, is a variable \
+                          that might reflect the prefrence of EF-hand for said InterPro domain. Since biologically relevant \
+                          protein-protein interactions are often specific, we expect to see true EF-hand interactions  \
+                          less frequently in the background (low **Y** frequency) and more frequently among positive hits for interacting partners (high **X** frequency). \
+                          We reason that InterPro motifs that fall beneath the x = y as being more likely to represent candidate proteins. \
+                          The probability of being a candidate partner would increase with")
+    st.latex(r'''\left| X - Y \right|''')
+    
+    subthoughts_cont = st.container()
+    subthoughts_cont.write("Most of Caldendrin's known binding candidates do fall under the x = y line, \
+                           although the same can be said for the majority of our dataset. This is overall not too surprising, \
+                           since EF-hand binders forms a subset of the collective PSD protein. The outlier of this trend is Cortactin, \
+                           whose InterPro annotations are both common among the background proteins and EF-hand binders.")
 
+    thoughts_cont_3 = st.container()
+    thoughts_cont_3.write("Our heuristic to finding binders have several drawbacks. First, we are not taking into consideration the \
+                        presence of orthogonal mutations. As proteins evolve and diverge, they can acquire mutations that \
+                        enable them to bind to new ligands and no longer interact with the original ligand while still maintaining \
+                        their motif. In addition, we do not have a way to asssess the confidence of our predictions statistically. \
+                        Last but not least, we are have not validate whether our heuristic is viable using available experimental data.")
+
+    st.subheader('Future directions')
+    future_cont = st.container()
+    future_cont.write("A good improvement to the model is to also take into consideration the number of proteins that carries the give motif, both at the \
+                      PSD and proteome level. More careful vetting of the data, as well as *ab initio* docking calculations and MD simulations of predicted targets\
+                      interaction with Caldendrin could be useful in improving our predictions.")
+    
+    st.subheader('Closing remarks')
+    st.markdown("Thank you professor Marcotte for giving us a comprehensive introduction to the wonderful world of Bioinformatics and Systems biology, for always keeping \
+                      lectures interesting with the latest scientific update, and for inspiring us be curious scientists. \
+                      We would also like to thank our TA Matt, for providing great coding advices, for being super helpful in explaining concepts, and for introducing us to \
+                      Streamlit, the backbone of this website.")
+
+    
+    
     
 
 
@@ -327,7 +412,8 @@ def known_interactors(interactor_df=interactor_df):
 # Define dropdown menu options
 options = ['Introduction', 'MSA and motif', 
            'InterPro domains distribution',
-           'Disordered domain', 'Known interactors']
+           'Disordered domain', 'Known interactors', 
+           'Discussion']
 
 # Create dropdown menu
 choice = st.sidebar.selectbox('Choose an option:', options)
@@ -343,6 +429,8 @@ elif choice == 'MSA and motif':
     MSA()
 elif choice == 'Known interactors':
     known_interactors()
+elif choice == 'Discussion':
+    discussion()
 
 
 
