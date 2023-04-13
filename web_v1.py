@@ -76,7 +76,7 @@ image_motif = r'Meme_motif_binder_protein.png'
 
 def intro():
     #Titles
-    st.title('Caldendrin binding partners analysis')
+    st.title('Identifying Caldendrin binding partners')
     st.header('Swetha Iyer, Lisa Phan')
     st.subheader('Bioinformatics Spring 2023')
 
@@ -257,7 +257,7 @@ def disordered():
     st.subheader('N-terminal Disordered region of Caldendrin frequently appears along double P-fam EF-hand 7 motif')
     text_cont1 = st.container()
     text_cont1.write("Consisting of ~ 200 amino acids, Caldendrin's disordered region \
-            is a large component of the protein whose interaction preference is u. \
+            is a large component of the protein whose interaction preference is unknown. \
             A hidden markov model search for this architecture using EBI's HMMER suggestes that \
             this stretch of sequence is most commonly found in Caldendrin-like proteins across \
             the tree of life, with a strong presence in eukaryotes and birds")
@@ -389,7 +389,7 @@ def discussion():
                         presence of orthogonal mutations. As proteins evolve and diverge, they can acquire mutations that \
                         enable them to bind to new ligands and no longer interact with the original ligand while still maintaining \
                         their motif. In addition, we do not have a way to asssess the confidence of our predictions statistically. \
-                        Last but not least, we are have not validate whether our heuristic is viable using available experimental data.")
+                        Last but not least, we have not validate whether our heuristic is viable using available experimental data.")
 
     st.subheader('Future directions')
     future_cont = st.container()
@@ -402,6 +402,7 @@ def discussion():
                       lectures interesting with the latest scientific update, and for inspiring us be curious scientists. \
                       We would also like to thank our TA Matt, for providing great coding advices, for being super helpful in explaining concepts, and for introducing us to \
                       Streamlit, the backbone of this website.")
+    st.markdown("Code and data can be found at https://github.com/Lisa-Phan/Bioinfo_Project_Spring2023/tree/Lisa-Phan-app-v1")
 
     
     
